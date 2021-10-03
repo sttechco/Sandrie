@@ -10,6 +10,15 @@ if __name__ == '__main__':
     parser.add_argument('-n1', type=int, help='A number', default=1)
     parser.add_argument('-n2', type=int, help='Another number', default=1)
 
+    parser.add_argument('--config', '-c', type=argparse.FileType('r'), help='Config File')
+
     args = parser.parse_args()
+
+    if args.config:
+        config = configparser.ConfigParser()
+        config.read_file(args.config)
+        # Transforming values into integers
+        args.n1 = int(config['ARGUMENTS']['n1'])
+        args.n2 = int(config['ARGUMENTS']['n2'])
 
     add_numbers(args.n1, args.n2)
